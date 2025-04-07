@@ -9,7 +9,7 @@ public class Apple {
     private double timeLimit;
     private double endTime;
 
-    int appleCounter; // when the snake eats the apple then the the apple counter will be affected by one, this is added inside.
+    int appleCounter; // when the snake eats the apple then the apple counter will be affected by one, this is added inside.
 
     Random rand = new Random();
 
