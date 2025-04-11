@@ -2,6 +2,7 @@ import java.util.Random;
 import java.lang.System;
 
 public class Apple {
+    private int difculty;
     private int x;
     private int y;
 
@@ -9,16 +10,25 @@ public class Apple {
     private double timeLimit;
     private double endTime;
 
-    int appleCounter; // when the snake eats the apple then the apple counter will be affected by one, this is added inside.
-
     Random rand = new Random();
 
-    public Apple() {
+    public Apple(int difculty) {
+        this.difculty = difculty;
         x = rand.nextInt(512);
         y = rand.nextInt(512);
 
         startTime = System.currentTimeMillis();
-        endTime = 30;
+        endTime = startTime + 30000;
+
+        boolean b = true;
+        if (b) {
+            difculty = difculty + 1;
+        }
+        if (difculty > 0) {
+            if ((endTime - difculty) % 3 == 0) {
+                endTime = endTime - 1000;
+            }
+        }
         StdDraw.picture(x, y, "Apple.png");
     }
 }
