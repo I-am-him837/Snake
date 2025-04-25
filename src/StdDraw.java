@@ -894,6 +894,9 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
         }
     }
 
+    public static void setPenColor(int i, int i1, int i2) {
+    }
+
 
     /**
      * This method cannot be called directly.
