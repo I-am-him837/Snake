@@ -31,4 +31,10 @@ public class Apple {
         }
         StdDraw.picture(x, y, "Apple.png");
     }
+    public int getX() {
+        return x;
+    }
+    public int getY() {
+        return y;
+    }
 }

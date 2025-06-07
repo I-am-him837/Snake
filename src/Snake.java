@@ -20,6 +20,10 @@ public class Snake extends Applet {
 
     private boolean inGame = true;
 
+    private Apple[] apples = new Apple[7];
+
+    private int points;
+
     int snakeLength = xIntegers.length;
 
     public Snake() {
@@ -29,6 +33,24 @@ public class Snake extends Applet {
         StdDraw.setYscale(0, HEIGHT);
 
         StdDraw.setPenColor(255,255,255);
+    }
+    private void checkApple() {
+        for (int i = 0; i < apples.length; i ++) {
+            if (xIntegers[0] == apples[i].getX() && yIntegers[0] == apples[i].getY()) {
+                points++;
+                draw();
+            }
+        }
+    }
+    private void draw() {
+        for (Apple apple : apples) {
+            StdDraw.picture(apple.getX(), apple.getY(), "Apple.png");
+        }
+
+        for (int i = 0; i < xIntegers.length; i++) {
+            StdDraw.picture(xIntegers[i], yIntegers[i], "Snake_body.webp");
+        }
+        StdDraw.picture(xIntegers[0], yIntegers[0], "Snake.png");
     }
     private void checkKey() {
         if (!rightDirection && StdDraw.isKeyPressed(left)) {
@@ -57,32 +79,31 @@ public class Snake extends Applet {
     }
 
     private void move() {
-        for(int i = snakeLength; i > 1; i--) {
-            xIntegers[i] = xIntegers[i-1];
-            yIntegers[i] = yIntegers[i-1];
+        for(int i = snakeLength; i >= 1; i--) {
+            xIntegers[i] = xIntegers[i - 1];
+            yIntegers[i] = yIntegers[i - 1];
+        }
+        if (!upDirection && downDirection == true); {
+            yIntegers[0] = yIntegers[0] - 1;
+        }
+        if (!downDirection && upDirection == true); {
+            yIntegers[0] = yIntegers[0] + 1;
+        }
 
-            if (!upDirection && downDirection == true); {
-                yIntegers[0] = yIntegers[0] - 1;
-            }
+        if (!leftDirection && rightDirection == true); {
+            xIntegers[0] = xIntegers[0] + 1;
+        }
 
-            if (!downDirection && upDirection == true); {
-                yIntegers[0] = yIntegers[0] + 1;
-            }
-
-            if (!leftDirection && rightDirection == true); {
-                xIntegers[0] = xIntegers[0] + 1;
-            }
-
-            if (!rightDirection && leftDirection == true); {
-                xIntegers[0] = xIntegers[0] - 1;
-            }
+        if (!rightDirection && leftDirection == true); {
+            xIntegers[0] = xIntegers[0] - 1;
         }
     }
 
     private void checks() {
         checkKey();
         move();
-    }
+        draw();
+        checkApple();    }
     public void gameStart() {
         xIntegers[0] = 256;
         yIntegers[0] = 256;
