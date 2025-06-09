@@ -1,7 +1,6 @@
-import java.applet.Applet;
 import java.awt.event.KeyEvent;
 
-public class Snake extends Applet {
+public class Snake {
     private final int WIDTH = 512;
     private final int HEIGHT = 512;
 
@@ -20,9 +19,11 @@ public class Snake extends Applet {
 
     private boolean inGame = true;
 
-    private Apple[] apples = new Apple[7];
+    private Apple[] apples = new Apple[3];
 
-    private int points;
+    private int points = 0;
+
+    private boolean firstMove = false;
 
     int snakeLength = xIntegers.length;
 
@@ -42,12 +43,36 @@ public class Snake extends Applet {
             }
         }
     }
-    private void draw() {
-        for (Apple apple : apples) {
-            StdDraw.picture(apple.getX(), apple.getY(), "Apple.png");
+
+    private void gameOver(){
+        return;
+    }
+
+    private void collisonDetection() {
+        if (xIntegers[0] <= 0 || xIntegers[0] >= 512) {
+            inGame = false;
+            gameOver();
         }
 
-        for (int i = 0; i < xIntegers.length; i++) {
+        if (yIntegers[0] <= 0 || yIntegers[0] >= 512) {
+            inGame = false;
+            gameOver();
+        }
+
+        for (int i = 1; i < xIntegers.length; i++){
+                if (xIntegers[0] == xIntegers[i] && yIntegers[0] == yIntegers[i]) {
+                    inGame = false;
+                    gameOver();
+            }
+        }
+    }
+
+    private void draw() {
+        for (int i = 0; i < apples.length; i++) {
+            StdDraw.picture(apples[i].getX(), apples[i].getY(), "Apple.png");
+        }
+
+        for (int i = 1; i < xIntegers.length; i++) {
             StdDraw.picture(xIntegers[i], yIntegers[i], "Snake_body.webp");
         }
         StdDraw.picture(xIntegers[0], yIntegers[0], "Snake.png");
@@ -103,15 +128,27 @@ public class Snake extends Applet {
         checkKey();
         move();
         draw();
-        checkApple();    }
+        checkApple();
+        collisonDetection();
+    }
+
     public void gameStart() {
         xIntegers[0] = 256;
         yIntegers[0] = 256;
 
-        Apple[] appleCoordinates = new Apple[20];
+        for (int i = 0; i < apples.length; i++) {
+            apples[i] = new Apple(1);
+        }
+
         while (inGame) {
             if (StdDraw.isKeyPressed(left) || StdDraw.isKeyPressed(right) || StdDraw.isKeyPressed(up) || StdDraw.isKeyPressed(down)) {
-                // make checks function
+                checks();
+                firstMove = true;
+            }
+            while (firstMove) {
+                StdDraw.show(50);
+                StdDraw.clear();
+                checks();
             }
         }
     }
