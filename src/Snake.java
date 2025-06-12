@@ -32,6 +32,12 @@ public class Snake {
         StdDraw.clear(StdDraw.GREEN);
         StdDraw.setXscale(0, WIDTH);
         StdDraw.setYscale(0, HEIGHT);
+        StdDraw.picture(xIntegers[0], yIntegers[0], "Snake head.png", 40, 40);
+
+        for (int i = 0; i < apples.length; i++) {
+            StdDraw.picture(apples[i].getX(), apples[i].getY(), "Apple.png");
+        }
+
 
         StdDraw.setPenColor(255,255,255);
     }
