@@ -28,18 +28,22 @@ public class Snake {
     int snakeLength = xIntegers.length;
 
     public Snake() {
-
         StdDraw.clear(StdDraw.GREEN);
         StdDraw.setXscale(0, WIDTH);
         StdDraw.setYscale(0, HEIGHT);
         StdDraw.picture(xIntegers[0], yIntegers[0], "Snake head.png", 40, 40);
 
+
+        for (int i = 0; i < 3; i++) {
+            apples[i] = new Apple(1);
+        }
         for (int i = 0; i < apples.length; i++) {
-            StdDraw.picture(apples[i].getX(), apples[i].getY(), "Apple.png");
+            StdDraw.picture(apples[i].getX(), apples[i].getY(), "Apple.png", 20,20);
         }
 
-
         StdDraw.setPenColor(255,255,255);
+
+        gameStart();
     }
     private void checkApple() {
         for (int i = 0; i < apples.length; i ++) {
@@ -110,7 +114,7 @@ public class Snake {
     }
 
     private void move() {
-        for(int i = snakeLength; i >= 1; i--) {
+        for(int i = snakeLength-1; i >= 1; i--) {
             xIntegers[i] = xIntegers[i - 1];
             yIntegers[i] = yIntegers[i - 1];
         }
@@ -141,10 +145,6 @@ public class Snake {
     public void gameStart() {
         xIntegers[0] = 256;
         yIntegers[0] = 256;
-
-        for (int i = 0; i < apples.length; i++) {
-            apples[i] = new Apple(1);
-        }
 
         while (inGame) {
             if (StdDraw.isKeyPressed(left) || StdDraw.isKeyPressed(right) || StdDraw.isKeyPressed(up) || StdDraw.isKeyPressed(down)) {
