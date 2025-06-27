@@ -12,7 +12,7 @@ public class Snake {
     private final int down = KeyEvent.VK_DOWN;
     private final int right = KeyEvent.VK_RIGHT;
 
-    private boolean leftDirection = true;
+    private boolean leftDirection = false;
     private boolean rightDirection = false;
     private boolean upDirection = false;
     private boolean downDirection = false;
@@ -83,9 +83,9 @@ public class Snake {
         }
 
         for (int i = 1; i < xIntegers.length; i++) {
-            StdDraw.picture(xIntegers[i], yIntegers[i], "Snake_body.webp");
+            StdDraw.picture(xIntegers[i], yIntegers[i], "Snake head.png", 20, 20);
         }
-        StdDraw.picture(xIntegers[0], yIntegers[0], "Snake.png");
+        StdDraw.picture(xIntegers[0], yIntegers[0], "Snake head.png", 20, 20);
     }
     private void checkKey() {
         if (!rightDirection && StdDraw.isKeyPressed(left)) {
@@ -126,7 +126,7 @@ public class Snake {
         }
 
         if (!leftDirection && rightDirection == true); {
-            xIntegers[0] = xIntegers[0] + 1;
+            xIntegers[0] = xIntegers[0] + 20;
         }
 
         if (!rightDirection && leftDirection == true); {
