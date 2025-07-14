@@ -25,9 +25,13 @@ public class Snake {
 
     private boolean firstMove = false;
 
-    int snakeLength = xIntegers.length;
+    int snakeLength = 5;
+
 
     public Snake() {
+        xIntegers[0] = 256;
+        yIntegers[0] = 256;
+
         StdDraw.clear(StdDraw.GREEN);
         StdDraw.setXscale(0, WIDTH);
         StdDraw.setYscale(0, HEIGHT);
@@ -83,9 +87,9 @@ public class Snake {
         }
 
         for (int i = 1; i < xIntegers.length; i++) {
-            StdDraw.picture(xIntegers[i], yIntegers[i], "Snake head.png", 20, 20);
+            StdDraw.picture(xIntegers[i], yIntegers[i], "Snake head.png", 40, 40);
         }
-        StdDraw.picture(xIntegers[0], yIntegers[0], "Snake head.png", 20, 20);
+        StdDraw.picture(xIntegers[0], yIntegers[0], "Snake head.png", 40, 40);
     }
     private void checkKey() {
         if (!rightDirection && StdDraw.isKeyPressed(left)) {
@@ -114,23 +118,23 @@ public class Snake {
     }
 
     private void move() {
-        for(int i = snakeLength-1; i >= 1; i--) {
-            xIntegers[i] = xIntegers[i - 1];
-            yIntegers[i] = yIntegers[i - 1];
+        if (!upDirection && downDirection == true) {
+            yIntegers[0] = yIntegers[0] - 20;
         }
-        if (!upDirection && downDirection == true); {
-            yIntegers[0] = yIntegers[0] - 1;
-        }
-        if (!downDirection && upDirection == true); {
-            yIntegers[0] = yIntegers[0] + 1;
+        else if (!downDirection && upDirection == true) {
+            yIntegers[0] = yIntegers[0] + 20;
         }
 
-        if (!leftDirection && rightDirection == true); {
+        else if (!leftDirection && rightDirection == true) {
             xIntegers[0] = xIntegers[0] + 20;
         }
 
-        if (!rightDirection && leftDirection == true); {
-            xIntegers[0] = xIntegers[0] - 1;
+        else if (!rightDirection && leftDirection == true) {
+            xIntegers[0] = xIntegers[0] - 20;
+        }
+        for(int i = snakeLength-1; i >= 1; i--) { // head is not working properly
+            xIntegers[i] = xIntegers[i - 1];
+            yIntegers[i] = yIntegers[i - 1];
         }
     }
 
@@ -143,8 +147,6 @@ public class Snake {
     }
 
     public void gameStart() {
-        xIntegers[0] = 256;
-        yIntegers[0] = 256;
 
         while (inGame) {
             if (StdDraw.isKeyPressed(left) || StdDraw.isKeyPressed(right) || StdDraw.isKeyPressed(up) || StdDraw.isKeyPressed(down)) {
