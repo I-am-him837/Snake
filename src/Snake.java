@@ -1,3 +1,4 @@
+import java.awt.*;
 import java.awt.event.KeyEvent;
 
 public class Snake {
@@ -25,7 +26,9 @@ public class Snake {
 
     private boolean firstMove = false;
 
-    int snakeLength = 5;
+    int snakeLength = 15;
+
+    private final Font endGame = new Font("Times New Roman", Font.BOLD, 32);
 
 
     public Snake() {
@@ -35,6 +38,7 @@ public class Snake {
         StdDraw.clear(StdDraw.GREEN);
         StdDraw.setXscale(0, WIDTH);
         StdDraw.setYscale(0, HEIGHT);
+        StdDraw.setPenColor(StdDraw.GREEN);
         StdDraw.picture(xIntegers[0], yIntegers[0], "Snake head.png", 40, 40);
 
 
@@ -42,7 +46,7 @@ public class Snake {
             apples[i] = new Apple(1);
         }
         for (int i = 0; i < apples.length; i++) {
-            StdDraw.picture(apples[i].getX(), apples[i].getY(), "Apple.png", 20,20);
+            StdDraw.picture(apples[i].getX(), apples[i].getY(), "Apple.png", 15,15);
         }
 
         StdDraw.setPenColor(255,255,255);
@@ -53,13 +57,16 @@ public class Snake {
         for (int i = 0; i < apples.length; i ++) {
             if (xIntegers[0] == apples[i].getX() && yIntegers[0] == apples[i].getY()) {
                 points++;
+                snakeLength++;
                 draw();
             }
         }
     }
 
-    private void gameOver(){
-        return;
+    private void gameOver() {
+        StdDraw.setPenColor(StdDraw.BLACK);
+        StdDraw.setFont(endGame);
+        StdDraw.text(256, 256, "Game Over");
     }
 
     private void collisonDetection() {
@@ -73,20 +80,20 @@ public class Snake {
             gameOver();
         }
 
-        for (int i = 1; i < xIntegers.length; i++){
-                if (xIntegers[0] == xIntegers[i] && yIntegers[0] == yIntegers[i]) {
-                    inGame = false;
-                    gameOver();
+        for (int i = 2; i < snakeLength; i++){
+            if (xIntegers[0] == xIntegers[i] && yIntegers[0] == yIntegers[i]) {
+                inGame = false;
+                gameOver();
             }
         }
     }
 
     private void draw() {
         for (int i = 0; i < apples.length; i++) {
-            StdDraw.picture(apples[i].getX(), apples[i].getY(), "Apple.png");
+            StdDraw.picture(apples[i].getX(), apples[i].getY(), "Apple.png",10, 10);
         }
 
-        for (int i = 1; i < xIntegers.length; i++) {
+        for (int i = 1; i < snakeLength; i++) {
             StdDraw.picture(xIntegers[i], yIntegers[i], "Snake head.png", 40, 40);
         }
         StdDraw.picture(xIntegers[0], yIntegers[0], "Snake head.png", 40, 40);
@@ -155,7 +162,7 @@ public class Snake {
             }
             while (firstMove) {
                 StdDraw.show(50);
-                StdDraw.clear();
+                StdDraw.clear(StdDraw.GREEN);
                 checks();
             }
         }
